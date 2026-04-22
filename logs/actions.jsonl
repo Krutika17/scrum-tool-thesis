@@ -1,0 +1,31 @@
+{"ts_ms": 1771682992501, "action": "todo", "card_id": "", "title": "Log test 1", "status": "todo", "priority": "medium"}
+{"ts_ms": 1771682992566, "action": "prog", "card_id": "", "title": "Log test 2", "status": "progress", "priority": "medium"}
+{"ts_ms": 1771682992637, "action": "imp", "card_id": "", "title": "IMPEDIMENT: Waiting for supervisor feedback", "status": "todo", "priority": "high"}
+{"ts_ms": 1771683283030, "action": "todo", "card_id": "", "title": "Log test 1", "status": "todo", "priority": "medium"}
+{"ts_ms": 1771683283109, "action": "prog", "card_id": "", "title": "Log test 2", "status": "progress", "priority": "medium"}
+{"ts_ms": 1771683283189, "action": "imp", "card_id": "", "title": "IMPEDIMENT: Waiting for supervisor feedback", "status": "todo", "priority": "high"}
+{"ts_ms": 1771683926658, "action": "todo", "card_id": "", "title": "New task", "status": "todo", "priority": "medium"}
+{"ts_ms": 1771683926735, "action": "prog", "card_id": "", "title": "Task in progress", "status": "progress", "priority": "medium"}
+{"ts_ms": 1771683926814, "action": "add", "card_id": "", "title": "Custom task", "status": "todo", "priority": "high"}
+{"ts_ms": 1771683938457, "action": "move", "card_id": "ct3fcnu615bbiicfpzxsmrqq6gc", "title": "", "status": "progress", "priority": "low"}
+{"ts_ms": 1771683938591, "action": "note", "card_id": "ct3fcnu615bbiicfpzxsmrqq6gc", "title": "", "status": "", "priority": "", "extra": {"note": "Blocked: waiting for reply"}}
+{"ts_ms": 1771683938686, "action": "done", "card_id": "ct3fcnu615bbiicfpzxsmrqq6gc", "title": "", "status": "done", "priority": ""}
+{"ts_ms": 1771683938795, "action": "delete", "card_id": "ct3fcnu615bbiicfpzxsmrqq6gc", "title": "", "status": "", "priority": ""}
+{"ts_ms": 1771684527687, "action": "standup", "card_id": "c9qtwt4babjft8g7y98jkawyapy", "title": "Standup — 2026-02-21", "yesterday": "completed project phase 1", "today": "working on BRD", "blockers": "client call"}
+{"ts_ms": 1771684527695, "action": "imp", "card_id": "cmq7okz4jkpbsjxbo7biyqtf41r", "title": "IMPEDIMENT: client call", "status": "todo", "priority": "high"}
+{"ts_ms": 1771752234736, "action": "standup", "card_id": "cnfn58efphibhdfw918hxxxqsyy", "title": "Standup — 2026-02-22", "yesterday": "phase 2 planning", "today": "write design section", "blockers": "none"}
+{"ts_ms": 1772453416697, "action": "standup", "card_id": "--card", "title": "cqaj3qcxohfydipjtbp143dag4y", "status": "--title", "priority": "Standup — 2026-03-02", "extra": {"raw": "--yesterday"}}
+{"ts_ms": 1772453416901, "action": "prog", "card_id": "--title", "title": "Implement export feature", "status": "--status", "priority": "progress", "extra": {"raw": "--priority"}}
+{"ts_ms": 1772453416978, "action": "imp", "card_id": "--title", "title": "IMPEDIMENT: Waiting for supervisor feedback", "status": "--status", "priority": "todo", "extra": {"raw": "--priority"}}
+{"ts_ms": 1772453431726, "action": "standup", "card_id": "--card", "title": "cgpwcrrswmpg5pdk4994jt7tcqo", "status": "--title", "priority": "Standup — 2026-03-02", "extra": {"raw": "--yesterday"}}
+{"ts_ms": 1772454211515, "action": "todo", "card_id": "--card", "title": "", "status": "--title", "priority": "Log ID test", "extra": {"raw": "--status"}}
+{"ts_ms": 1772805703988, "action": "todo", "card_id": "--card", "title": "", "status": "--title", "priority": "Supervisor demo task", "extra": {"raw": "--status"}}
+{"ts_ms": 1772808913608, "action": "move", "card_id": "--card", "title": "cu34q3gfbrfbqjenc8ab1irnoao", "status": "--status", "priority": "done", "extra": {"raw": "--priority"}}
+{"ts_ms": 1772808913895, "action": "note", "card_id": "--card", "title": "cu34q3gfbrfbqjenc8ab1irnoao", "status": "--extra", "priority": "Blocked: …"}
+{"ts_ms": 1772808914001, "action": "delete", "card_id": "--card", "title": "cu34q3gfbrfbqjenc8ab1irnoao", "status": "", "priority": ""}
+{"ts_ms": 1773052714482, "action": "delete", "card_id": "--card", "title": "csaeq7x3fhpgq5nu7hhc3poja7e", "status": "", "priority": ""}
+{"ts_ms": 1773053607889, "action": "imp", "card_id": "--card", "title": "", "status": "--title", "priority": "IMPEDIMENT: Waiting for supervisor feedback", "extra": {"raw": "--status"}}
+{"ts_ms": 1773054543029, "action": "done", "card_id": "--card", "title": "cpxjkumdzgfykuf1yp3isoe9ngr", "status": "--status", "priority": "done"}
+{"ts_ms": 1773054543214, "action": "note", "card_id": "--card", "title": "cpxjkumdzgfykuf1yp3isoe9ngr", "status": "--extra", "priority": "Resolved: supervisor replied / feedback received"}
+{"ts_ms": 1773054543396, "action": "low", "card_id": "--card", "title": "cpxjkumdzgfykuf1yp3isoe9ngr", "status": "--priority", "priority": "low"}
+{"ts_ms": 1773054645135, "action": "delete", "card_id": "--card", "title": "ckwu7qkdsfjru7kaef9uzhtg4cr", "status": "", "priority": ""}

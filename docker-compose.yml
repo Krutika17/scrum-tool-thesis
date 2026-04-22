@@ -1,0 +1,9 @@
+services:
+  focalboard:
+    image: mattermost/focalboard
+    ports:
+      - "8000:8000"
+    volumes:
+      - focalboard_data:/data
+volumes:
+  focalboard_data:

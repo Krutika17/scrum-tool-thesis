@@ -1,0 +1,17 @@
+ts_ms,ts_local,action,card_id,title,status,priority,extra_json
+1771682992501,2026-02-21 15:09:52,todo,,Log test 1,todo,medium,{}
+1771682992566,2026-02-21 15:09:52,prog,,Log test 2,progress,medium,{}
+1771682992637,2026-02-21 15:09:52,imp,,IMPEDIMENT: Waiting for supervisor feedback,todo,high,{}
+1771683283030,2026-02-21 15:14:43,todo,,Log test 1,todo,medium,{}
+1771683283109,2026-02-21 15:14:43,prog,,Log test 2,progress,medium,{}
+1771683283189,2026-02-21 15:14:43,imp,,IMPEDIMENT: Waiting for supervisor feedback,todo,high,{}
+1771683926658,2026-02-21 15:25:26,todo,,New task,todo,medium,{}
+1771683926735,2026-02-21 15:25:26,prog,,Task in progress,progress,medium,{}
+1771683926814,2026-02-21 15:25:26,add,,Custom task,todo,high,{}
+1771683938457,2026-02-21 15:25:38,move,ct3fcnu615bbiicfpzxsmrqq6gc,,progress,low,{}
+1771683938591,2026-02-21 15:25:38,note,ct3fcnu615bbiicfpzxsmrqq6gc,,,,"{""note"": ""Blocked: waiting for reply""}"
+1771683938686,2026-02-21 15:25:38,done,ct3fcnu615bbiicfpzxsmrqq6gc,,done,,{}
+1771683938795,2026-02-21 15:25:38,delete,ct3fcnu615bbiicfpzxsmrqq6gc,,,,{}
+1771684527687,2026-02-21 15:35:27,standup,c9qtwt4babjft8g7y98jkawyapy,Standup — 2026-02-21,,,{}
+1771684527695,2026-02-21 15:35:27,imp,cmq7okz4jkpbsjxbo7biyqtf41r,IMPEDIMENT: client call,todo,high,{}
+1771752234736,2026-02-22 10:23:54,standup,cnfn58efphibhdfw918hxxxqsyy,Standup — 2026-02-22,,,{}
