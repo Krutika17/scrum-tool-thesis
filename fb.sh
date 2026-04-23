@@ -6,9 +6,9 @@ SCRIPT_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
 usage() {
   cat <<'USAGE'
 Usage:
-  ./fb add  "Title" --status todo|progress|done --priority high|medium|low
-  ./fb todo "Title"        (quick add: todo + medium)
-  ./fb prog "Title"        (quick add: progress + medium)
+  ./fb add  "Title" [--status todo|progress|done] [--priority high|medium|low]
+  ./fb todo "Title"
+  ./fb prog "Title"
 
   ./fb list [--limit N] [--query TEXT]
   ./fb search "TEXT"
@@ -20,22 +20,25 @@ Usage:
   ./fb delete <CARD_ID>
 
   ./fb note <CARD_ID> "Note text"
-  ./fb imp  "Impediment text"          (creates impediment card: todo + high)
+
+  ./fb imp "Impediment text"
   ./fb impediments
+  ./fb resolve <CARD_ID> "Resolved: ..."
 
   ./fb standup
 
   ./fb report activity --last 10
   ./fb report standup --last 7
+  ./fb report impediments
   ./fb report impediments --open
   ./fb report today
 
-  ./fb export --csv
-
+  ./fb export --type activity
+  ./fb export --type standup
+  ./fb export --type impediments
 USAGE
 }
 
-# Always load .env from this folder
 if [[ -f "$SCRIPT_DIR/.env" ]]; then
   set -a
   source "$SCRIPT_DIR/.env"
@@ -46,14 +49,29 @@ else
 fi
 
 extract_id() {
-  # Reads mixed output (headers + JSON) from stdin and prints first id found.
-  python3 - <<'PY'
-import sys, re
-s=sys.stdin.read()
-# find first "id":"...."
-m=re.search(r'"id"\s*:\s*"([^"]+)"', s)
-print(m.group(1) if m else "")
-PY
+  python3 -c '
+import sys, json, re
+
+s = sys.stdin.read()
+
+m = re.search(r"(\{.*|\[.*)", s, re.DOTALL)
+body = m.group(1).strip() if m else s.strip()
+
+card_id = ""
+
+try:
+    data = json.loads(body)
+    if isinstance(data, list) and len(data) > 0 and isinstance(data[0], dict):
+        card_id = data[0].get("id", "")
+    elif isinstance(data, dict):
+        card_id = data.get("id", "")
+except Exception:
+    m2 = re.search(r"\"id\"\s*:\s*\"([^\"]+)\"", body)
+    if m2:
+        card_id = m2.group(1)
+
+print(card_id)
+'
 }
 
 cmd="${1:-}"
@@ -134,7 +152,7 @@ case "$cmd" in
     [[ -n "$PRIORITY" ]] && args+=("--priority" "$PRIORITY")
 
     "$SCRIPT_DIR/fb_update.py" "${args[@]}"
-    python3 "$SCRIPT_DIR/fb_log.py" move --card "$cid" --status "${STATUS:-}" --priority "${PRIORITY:-}" || true
+    python3 "$SCRIPT_DIR/fb_log.py" move --card "$cid" --status "$STATUS" --priority "$PRIORITY" || true
     ;;
 
   done)
@@ -167,8 +185,9 @@ case "$cmd" in
 
   note)
     cid="${1:-}"
-    note_text="${2:-}"
-    [[ -z "$cid" || -z "$note_text" ]] && { echo "ERROR: note needs <CARD_ID> and \"text\""; usage; exit 2; }
+    shift || true
+    note_text="${*:-}"
+    [[ -z "$cid" || -z "$note_text" ]] && { echo "ERROR: note needs <CARD_ID> and text"; usage; exit 2; }
     "$SCRIPT_DIR/fb_note.py" "$cid" "$note_text"
     python3 "$SCRIPT_DIR/fb_log.py" note --card "$cid" --extra "$note_text" || true
     ;;
@@ -187,6 +206,18 @@ case "$cmd" in
     exec "$SCRIPT_DIR/fb_impediments.py"
     ;;
 
+  resolve)
+    cid="${1:-}"
+    shift || true
+    msg="${*:-}"
+    [[ -z "$cid" || -z "$msg" ]] && { echo "ERROR: resolve needs <CARD_ID> and message"; usage; exit 2; }
+
+    "$SCRIPT_DIR/fb_update.py" "$cid" --status done --priority low
+    "$SCRIPT_DIR/fb_note.py" "$cid" "$msg"
+    python3 "$SCRIPT_DIR/fb_log.py" resolve --card "$cid" --extra "$msg" --status done --priority low || true
+    echo '{"ok": true}'
+    ;;
+
   standup)
     exec "$SCRIPT_DIR/fb_standup.py"
     ;;
@@ -196,7 +227,7 @@ case "$cmd" in
     ;;
 
   export)
-    exec "$SCRIPT_DIR/fb_export.py" "$@"
+    exec "$SCRIPT_DIR/fb_report.py" export "$@"
     ;;
 
   -h|--help|help)
