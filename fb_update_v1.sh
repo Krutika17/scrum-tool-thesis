@@ -126,7 +126,7 @@ print(json.dumps(card))
 ' "$CARD_ID" "$STATUS_PROP_ID" "$PRIORITY_PROP_ID" "$status_id" "$priority_id" "$DO_DELETE" "$BOARD_ID"
 )"
 
-# Helper: detect HTML responses
+
 is_html() {
   echo "$1" | grep -qi "<!doctype html>"
 }
