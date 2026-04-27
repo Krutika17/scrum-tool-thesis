@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 import os, sys, json, time
 import argparse
 import urllib.request
@@ -37,7 +36,7 @@ def http_json(method: str, url: str, token: str, data_obj=None):
         die(f"HTTP error: {e}")
 
 def pick_prop_ids(board_json):
-    # Build lookup maps from board cardProperties
+    
     status_prop = os.getenv("STATUS_PROP_ID", "")
     prio_prop = os.getenv("PRIORITY_PROP_ID", "")
 
@@ -78,7 +77,7 @@ def main():
 
     status_prop, prio_prop, status_opt, prio_opt = pick_prop_ids(board)
 
-    # Status/priority desired option IDs (from .env)
+    
     status_want = None
     if args.status:
         status_want = {
@@ -95,7 +94,7 @@ def main():
             "low": env("PRIORITY_LOW_ID"),
         }[args.priority]
 
-    # Get blocks
+    
     st, blocks = http_json("GET", f"{base}/api/v2/boards/{board_id}/blocks", token)
     if st != 200 or not isinstance(blocks, list):
         die(f"Failed to get blocks ({st}): {blocks}")
