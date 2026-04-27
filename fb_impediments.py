@@ -4,7 +4,7 @@ def main():
     q = os.environ.get("IMP_PREFIX", "IMPEDIMENT:")
     limit = 50
 
-    # Run fb_list.py and filter lines containing the prefix
+    
     cmd = ["python3", "fb_list.py", "--limit", str(limit)]
     out = subprocess.check_output(cmd, text=True, stderr=subprocess.STDOUT)
 
@@ -17,7 +17,7 @@ def main():
         if ln.startswith("Board:") or ln.startswith("----") or " | cards:" in ln:
             header.append(ln)
             continue
-        # card lines look like: <id>  |  <status>  |  <priority>  |  <title>
+       
         if "  |  " in ln and q.lower() in ln.lower():
             body.append(ln)
 
