@@ -7,7 +7,7 @@ The prototype is developed as part of a master's thesis exploring communication-
 
 ## Board Overview
 
-![Board overview](boardoverview.jpeg)
+![Board overview](Focalboard_view.png)
 
 ---
 
