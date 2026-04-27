@@ -11,7 +11,7 @@ source "$SCRIPT_DIR/.env"
 COOKIE_JAR="$SCRIPT_DIR/cookies.txt"
 LOGIN_URL="$FOCALBOARD_URL/api/v2/login"
 
-# Fresh cookie jar
+
 rm -f "$COOKIE_JAR"
 
 echo "Logging in to: $LOGIN_URL"
@@ -26,7 +26,7 @@ curl -sS -c "$COOKIE_JAR" -X POST "$LOGIN_URL" \
 echo "Saved cookies to: $COOKIE_JAR"
 echo "Cookie lines: $(wc -l < "$COOKIE_JAR")"
 
-# Check CSRF cookie exists
+
 CSRF_TOKEN="$(awk '$6=="MMCSRF"{print $7}' "$COOKIE_JAR" | tail -n 1)"
 if [ -z "$CSRF_TOKEN" ]; then
   CSRF_TOKEN="$(awk '$6=="csrf"{print $7}' "$COOKIE_JAR" | tail -n 1)"
