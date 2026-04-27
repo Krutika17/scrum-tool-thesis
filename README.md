@@ -5,7 +5,9 @@ It provides a simple CLI interface for common Scrum-related actions such as task
 
 The prototype is developed as part of a master's thesis exploring communication-centric and lightweight tool support for Scrum-based work in educational settings.
 
-![Focalboard](Image 27.04.26 at 14.57.jpeg)
+## Board Overview
+
+![Board overview](boardoverview.jpeg)
 
 ---
 
