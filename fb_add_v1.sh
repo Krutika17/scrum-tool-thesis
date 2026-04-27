@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-# --- load .env from same folder as this script ---
+
 SCRIPT_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
 
-# auto-export vars loaded from .env so Python can see them
+
 set -a
 [ -f "$SCRIPT_DIR/.env" ] && source "$SCRIPT_DIR/.env"
 set +a
@@ -27,9 +27,8 @@ set +a
 BASE_URL="${FOCALBOARD_URL:-http://localhost:8000}"
 
 TITLE="${1:-}"
-STATUS="${2:-todo}"        # todo|progress|done
-PRIORITY="${3:-medium}"    # high|medium|low
-
+STATUS="${2:-todo}"        
+PRIORITY="${3:-medium}"    
 if [[ -z "$TITLE" ]]; then
   echo "Usage: ./fb_add.sh \"Task title\" {todo|progress|done} {high|medium|low}"
   exit 2
@@ -61,7 +60,7 @@ print(int(time.time()*1000))
 PY
 )"
 
-# API expects an ARRAY of blocks
+
 PAYLOAD="$(python3 - <<PY
 import json
 now=int("$NOW_MS")
