@@ -28,7 +28,7 @@ def load_events():
 def export_csv(events):
     LOG_DIR.mkdir(parents=True, exist_ok=True)
 
-    # actions.csv (generic)
+    
     actions_path = LOG_DIR / "actions.csv"
     with actions_path.open("w", newline="", encoding="utf-8") as f:
         w = csv.writer(f)
@@ -45,7 +45,7 @@ def export_csv(events):
                 json.dumps(e.get("extra", {}), ensure_ascii=False),
             ])
 
-    # standups.csv
+    
     standups_path = LOG_DIR / "standups.csv"
     with standups_path.open("w", newline="", encoding="utf-8") as f:
         w = csv.writer(f)
@@ -63,7 +63,7 @@ def export_csv(events):
                 e.get("blockers",""),
             ])
 
-    # impediments.csv
+    
     imp_path = LOG_DIR / "impediments.csv"
     with imp_path.open("w", newline="", encoding="utf-8") as f:
         w = csv.writer(f)
