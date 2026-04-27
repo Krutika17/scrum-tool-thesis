@@ -1,9 +1,6 @@
-#!/usr/bin/env python3
 import os, sys, subprocess
 
 def main():
-    # Simple approach: use existing list command, filter by title prefix.
-    # This assumes ./fb_list.py exists and works.
     q = os.environ.get("IMP_PREFIX", "IMPEDIMENT:")
     limit = 50
 
