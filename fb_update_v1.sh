@@ -49,7 +49,7 @@ while [[ $# -gt 0 ]]; do
   esac
 done
 
-# Map status/priority -> option IDs
+
 status_id=""
 priority_id=""
 
@@ -74,7 +74,7 @@ BASE="${FOCALBOARD_URL%/}"
 API_BLOCKS_COLLECTION="$BASE/api/v2/boards/$BOARD_ID/blocks"
 API_BLOCK_SINGLE="$BASE/api/v2/boards/$BOARD_ID/blocks/$CARD_ID"
 
-# 1) GET blocks (JSON list)
+
 BLOCKS_JSON="$(curl -sS "$API_BLOCKS_COLLECTION" \
   -H "Authorization: Bearer $FOCALBOARD_TOKEN" \
   -H "Accept: application/json" \
@@ -84,7 +84,7 @@ BLOCKS_JSON="$(curl -sS "$API_BLOCKS_COLLECTION" \
   -H "Origin: $BASE"
 )"
 
-# 2) Build updated block object JSON (single block), from the list
+
 UPDATED_BLOCK_JSON="$(
   printf '%s' "$BLOCKS_JSON" | python3 -c '
 import json,sys,time
@@ -131,7 +131,7 @@ is_html() {
   echo "$1" | grep -qi "<!doctype html>"
 }
 
-# 3) Try PUT to SINGLE block endpoint (most likely correct)
+
 RESP1="$(curl -sS -i --max-redirs 0 -X PUT "$API_BLOCK_SINGLE" \
   -H "Authorization: Bearer $FOCALBOARD_TOKEN" \
   -H "Accept: application/json" \
@@ -147,7 +147,7 @@ if ! is_html "$RESP1"; then
   exit 0
 fi
 
-# 4) Fallback: some builds expect PUT array to collection
+
 PAYLOAD_ARRAY="[$UPDATED_BLOCK_JSON]"
 RESP2="$(curl -sS -i --max-redirs 0 -X PUT "$API_BLOCKS_COLLECTION" \
   -H "Authorization: Bearer $FOCALBOARD_TOKEN" \
