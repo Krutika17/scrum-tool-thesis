@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 import os, sys, json, time, urllib.request, urllib.error
 from pathlib import Path
 
@@ -112,13 +111,13 @@ def main():
     blocks_url = f"{BASE}/api/v2/boards/{BOARD_ID}/blocks"
     block_url  = f"{BASE}/api/v2/boards/{BOARD_ID}/blocks/{block_id}"
 
-    # Ensure block exists first
+    
     current = get_block(blocks_url, block_id)
     if not current:
         print("ERROR: Block not found on this board:", block_id, file=sys.stderr)
         sys.exit(2)
 
-    # DELETE mode (UI uses DELETE with {} body)
+    
     if do_delete:
         st, ctype, body = request("DELETE", block_url, {}, "application/json")
         if st not in (200, 204):
@@ -126,7 +125,7 @@ def main():
             print((body or "")[:800], file=sys.stderr)
             sys.exit(1)
 
-        # Verify it is actually gone
+        
         after = get_block(blocks_url, block_id)
         if after is not None:
             print("ERROR: DELETE returned success, but block still exists.", file=sys.stderr)
@@ -136,7 +135,7 @@ def main():
         print("{}")
         return
 
-    # PATCH mode (match UI payload shape)
+    
     props = ((current.get("fields") or {}).get("properties") or {}).copy()
 
     if status:
@@ -157,7 +156,7 @@ def main():
         "deletedFields": [],
         "updatedFields": {
             "properties": props,
-            # UI often includes contentOrder; safe to include empty list if missing
+            
             "contentOrder": (current.get("fields") or {}).get("contentOrder", []) or []
         }
     }
@@ -168,7 +167,7 @@ def main():
         print((body or "")[:800], file=sys.stderr)
         sys.exit(1)
 
-    # Verify change
+    
     verify = get_block(blocks_url, block_id)
     if not verify:
         print("ERROR: Block disappeared after PATCH (unexpected).", file=sys.stderr)
@@ -188,7 +187,7 @@ def main():
         print("VERIFY priority=", vprops.get(PRIORITY_PROP_ID), "wanted=", want_prio, file=sys.stderr)
         sys.exit(1)
 
-    # Some servers return {} for PATCH; keep it simple
+    
     if body.strip():
         print(body)
     else:
