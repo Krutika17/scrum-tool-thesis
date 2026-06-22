@@ -239,17 +239,15 @@ def add_note(card_id: str, note_text: str):
     if not card:
         raise ValueError(f"Card not found on this board: {card_id}")
 
-    card.setdefault("fields", {})
-    card["fields"].setdefault("contentOrder", [])
-    if not isinstance(card["fields"]["contentOrder"], list):
-        card["fields"]["contentOrder"] = []
+    existing_order = (card.get("fields") or {}).get("contentOrder", []) or []
+    if not isinstance(existing_order, list):
+        existing_order = []
 
-    nid = _gen_id()
     ts = _now_ms()
     created_by = card.get("createdBy", "")
 
     note_block = {
-        "id": nid,
+        "id": _gen_id(),
         "parentId": card_id,
         "createdBy": created_by,
         "modifiedBy": created_by,
@@ -263,15 +261,24 @@ def add_note(card_id: str, note_text: str):
         "boardId": BOARD_ID,
     }
 
-    card["fields"]["contentOrder"].append(nid)
-    card["updateAt"] = ts
-    if created_by:
-        card["modifiedBy"] = created_by
-
-    st, ctype, body = _request("POST", BLOCKS_URL, [note_block, card])
+    st, ctype, body = _request("POST", BLOCKS_URL, [note_block])
     if st not in (200, 201):
         raise RuntimeError(f"POST note failed: HTTP {st} {body[:800]}")
-    return json.loads(body) if body.strip() else {}
+
+    created = json.loads(body) if body.strip() else []
+    note_id = created[0].get("id") if isinstance(created, list) and created else note_block["id"]
+
+    patch_body = {
+        "deletedFields": [],
+        "updatedFields": {
+            "contentOrder": list(existing_order) + [note_id],
+        },
+    }
+    pst, pctype, pbody = _request("PATCH", f"{BLOCKS_URL}/{card_id}", patch_body)
+    if pst not in (200, 204):
+        raise RuntimeError(f"PATCH contentOrder failed: HTTP {pst} {pbody[:800]}")
+
+    return created
 
 
 def create_card(title: str, status: str = "todo", priority: str = "medium"):
