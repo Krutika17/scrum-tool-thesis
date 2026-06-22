@@ -1,37 +1,33 @@
-import os, sys, subprocess
+#!/usr/bin/env python3
+import os
+import sys
+
+import focalboard_client
+
 
 def main():
     q = os.environ.get("IMP_PREFIX", "IMPEDIMENT:")
     limit = 50
 
-    
-    cmd = ["python3", "fb_list.py", "--limit", str(limit)]
-    out = subprocess.check_output(cmd, text=True, stderr=subprocess.STDOUT)
+    try:
+        result = focalboard_client.list_work_items(limit=limit)
+    except Exception as e:
+        print(str(e), file=sys.stderr)
+        sys.exit(2)
 
-    lines = out.splitlines()
-    header = []
-    body = []
-    for ln in lines:
-        if ln.strip() == "":
-            continue
-        if ln.startswith("Board:") or ln.startswith("----") or " | cards:" in ln:
-            header.append(ln)
-            continue
-       
-        if "  |  " in ln and q.lower() in ln.lower():
-            body.append(ln)
+    matches = [item for item in result["items"] if q.lower() in item["title"].lower()]
 
     print("\nImpediments report\n")
-    if header:
-        print(header[0])
-        print()
+    print(f"Board: {result['board_title']}  | cards: {result['total']}")
+    print()
 
-    if not body:
+    if not matches:
         print(f"No cards found containing '{q}'.")
         return
 
-    for ln in body:
-        print(ln)
+    for item in matches:
+        print(f"{item['id']}  |  {item['status']:<12}  |  {item['priority']:<10}  |  {item['title']}")
+
 
 if __name__ == "__main__":
     main()
